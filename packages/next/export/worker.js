@@ -6,6 +6,8 @@ import { writeFile } from 'fs'
 import Sema from 'async-sema'
 import { loadComponents } from 'next-server/dist/server/load-components'
 
+import loadConfig from 'next-server/next-config' // Testing export bug fix
+
 const envConfig = require('next-server/config')
 const mkdirp = promisify(mkdirpModule)
 
@@ -36,6 +38,12 @@ process.on(
           serverRuntimeConfig,
           publicRuntimeConfig: renderOpts.runtimeConfig
         })
+
+        // Testing export bug fix
+        const PHASE_EXPORT = 'phase_export'
+        // const nextConfig = loadConfig(PHASE_EXPORT, dir)
+        // const nextConfig = loadConfig(PHASE_EXPORT)
+        loadConfig(PHASE_EXPORT)
 
         let htmlFilename = `${path}${sep}index.html`
         const pageExt = extname(page)
